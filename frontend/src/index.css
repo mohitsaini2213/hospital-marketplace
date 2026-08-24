@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ---- Color: deep clinical teal + Rajasthan sandstone accent ---- */
+  --color-ink: #12211d;
+  --color-ink-soft: #3c4e48;
+  --color-paper: #f7f5ef;
+  --color-paper-dim: #efeadd;
+  --color-surface: #ffffff;
+
+  --color-teal-900: #0b4f44;
+  --color-teal-700: #0e6455;
+  --color-teal-600: #0f7a63;
+  --color-teal-500: #17916f;
+  --color-teal-100: #d7ece3;
+  --color-teal-050: #eef6f2;
+
+  --color-sand-700: #93601f;
+  --color-sand-600: #b9803d;
+  --color-sand-500: #cf9a52;
+  --color-sand-100: #f3e6d2;
+  --color-sand-050: #faf3e8;
+
+  --color-line: #e4dfd2;
+  --color-line-soft: #ece7d9;
+
+  --color-red-600: #b5432f;
+  --color-red-100: #f6e2dd;
+  --color-amber-600: #b3771e;
+  --color-amber-100: #f6e7cd;
+  --color-green-600: #1e8f6f;
+  --color-green-100: #dcefe6;
+
+  /* ---- Type ---- */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --radius-card: 14px;
+  --radius-pill: 999px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: var(--color-teal-100);
+    color: var(--color-teal-900);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-teal-600);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-6 lg:px-8;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.14em] text-[var(--color-teal-700)];
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none bg-[var(--color-teal-600)] text-white hover:bg-[var(--color-teal-700)];
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none bg-white text-[var(--color-ink)] border border-[var(--color-line)] hover:border-[var(--color-teal-600)] hover:text-[var(--color-teal-700)];
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none bg-[var(--color-sand-600)] text-white hover:bg-[var(--color-sand-700)];
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-150 disabled:opacity-50 disabled:pointer-events-none bg-transparent text-[var(--color-ink)] hover:bg-[var(--color-paper-dim)];
+  }
+  .card {
+    @apply bg-[var(--color-surface)] border border-[var(--color-line)] rounded-[var(--radius-card)];
+  }
+  .input {
+    @apply w-full rounded-lg border border-[var(--color-line)] bg-white px-3.5 py-2.5 text-sm text-[var(--color-ink)] placeholder:text-[var(--color-ink-soft)]/50 focus:border-[var(--color-teal-600)] focus:ring-2 focus:ring-[var(--color-teal-100)] outline-none transition;
+  }
+  .input-error {
+    @apply border-[var(--color-red-600)] focus:border-[var(--color-red-600)] focus:ring-[var(--color-red-100)];
+  }
+  .label {
+    @apply block text-sm font-medium text-[var(--color-ink)] mb-1.5;
+  }
+  .field-error {
+    @apply mt-1 text-xs text-[var(--color-red-600)];
+  }
+  .badge-verified {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-teal-050)] text-[var(--color-teal-700)];
+  }
+  .badge-pending {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-amber-100)] text-[var(--color-amber-600)];
+  }
+  .badge-approved {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-green-100)] text-[var(--color-green-600)];
+  }
+  .badge-rejected {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-red-100)] text-[var(--color-red-600)];
+  }
+  .badge-suspended {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold bg-[var(--color-paper-dim)] text-[var(--color-ink-soft)];
+  }
+}

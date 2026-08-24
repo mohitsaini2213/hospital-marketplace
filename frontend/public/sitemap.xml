@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://hospitalmarketplace.in/</loc><priority>1.0</priority></url>
+  <url><loc>https://hospitalmarketplace.in/directory</loc><priority>0.8</priority></url>
+  <url><loc>https://hospitalmarketplace.in/hospitals</loc><priority>0.8</priority></url>
+  <url><loc>https://hospitalmarketplace.in/map</loc><priority>0.7</priority></url>
+  <url><loc>https://hospitalmarketplace.in/register</loc><priority>0.7</priority></url>
+  <url><loc>https://hospitalmarketplace.in/contact</loc><priority>0.5</priority></url>
+  <url><loc>https://hospitalmarketplace.in/privacy-policy</loc><priority>0.3</priority></url>
+  <url><loc>https://hospitalmarketplace.in/terms</loc><priority>0.3</priority></url>
+</urlset>
