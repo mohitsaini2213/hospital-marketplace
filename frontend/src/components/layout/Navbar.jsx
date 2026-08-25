@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaXmark, FaHospitalUser } from 'react-icons/fa6';
+import { FaBars, FaXmark, FaHouseChimneyMedical, FaHospitalUser } from 'react-icons/fa6';
 import { useAuth } from '@/context/AuthContext';
 
 const NAV_LINKS = [
@@ -22,14 +22,10 @@ export const Navbar = () => {
   to="/"
   className="flex items-center gap-2 font-display text-lg font-semibold text-[var(--color-teal-900)]"
 >
-  <img
-    src="/hm-logo.svg"
-    alt="Hospital Marketplace"
-    className="h-10 w-auto object-contain"
-  />
-  <span className="hidden sm:inline">
-    Hospital Marketplace
-  </span>
+ <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-teal-600)] text-white">
+  <FaHouseChimneyMedical size={15} />
+</span>
+Hospital Marketplace
 </Link>
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => (
