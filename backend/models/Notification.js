@@ -17,6 +17,8 @@ const notificationSchema = new mongoose.Schema(
         'REGISTRATION_REJECTED',
         'LISTING_SUSPENDED',
         'ACCOUNT_UPDATE',
+        'NEW_APPOINTMENT',
+        'APPOINTMENT_STATUS_CHANGED',
       ],
       required: true,
     },

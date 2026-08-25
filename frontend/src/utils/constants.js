@@ -13,15 +13,15 @@ export const FACILITY_TYPES = [
 
 export const FACILITY_TYPE_ICON = {
   Hospital: 'FaHospital',
-  Clinic: 'FaStethoscope',
-  'Medical Store / Pharmacy': 'FaPrescriptionBottleAlt',
-  'Diagnostic Center': 'FaVials',
+  Clinic: 'FaHouseChimneyMedical',
+  'Medical Store / Pharmacy': 'FaCapsules',
+  'Diagnostic Center': 'FaMicroscope',
   'Nursing Home': 'FaBed',
   'Dental Clinic': 'FaTooth',
-  'Physiotherapy Center': 'FaWalking',
-  'Pathology Lab': 'FaFlask',
+  'Physiotherapy Center': 'FaPersonWalking',
+  'Pathology Lab': 'FaFlaskVial',
   'Eye Care Center': 'FaEye',
-  Other: 'FaPlusSquare',
+  Other: 'FaHouseMedical',
 };
 
 export const STATUS_LABEL = {

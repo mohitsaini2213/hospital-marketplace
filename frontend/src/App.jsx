@@ -15,6 +15,7 @@ import { ContactPage } from '@/pages/public/ContactPage';
 import { PrivacyPolicyPage } from '@/pages/public/PrivacyPolicyPage';
 import { TermsPage } from '@/pages/public/TermsPage';
 import { NotFoundPage } from '@/pages/public/NotFoundPage';
+import { BookAppointmentPage } from '@/pages/public/BookAppointmentPage';
 
 import { LoginPage } from '@/pages/auth/LoginPage';
 import { ForgotPasswordPage } from '@/pages/auth/ForgotPasswordPage';
@@ -30,6 +31,8 @@ const DashboardOverview = lazy(() => import('@/pages/dashboard/DashboardOverview
 const EditListingPage = lazy(() => import('@/pages/dashboard/EditListingPage').then((m) => ({ default: m.EditListingPage })));
 const PhotosPage = lazy(() => import('@/pages/dashboard/PhotosPage').then((m) => ({ default: m.PhotosPage })));
 const ServicesPage = lazy(() => import('@/pages/dashboard/ServicesPage').then((m) => ({ default: m.ServicesPage })));
+const DoctorsPage = lazy(() => import('@/pages/dashboard/DoctorsPage').then((m) => ({ default: m.DoctorsPage })));
+const AppointmentsPage = lazy(() => import('@/pages/dashboard/AppointmentsPage').then((m) => ({ default: m.AppointmentsPage })));
 const HoursPage = lazy(() => import('@/pages/dashboard/HoursPage').then((m) => ({ default: m.HoursPage })));
 const WebsitePage = lazy(() => import('@/pages/dashboard/WebsitePage').then((m) => ({ default: m.WebsitePage })));
 const LocationPage = lazy(() => import('@/pages/dashboard/LocationPage').then((m) => ({ default: m.LocationPage })));
@@ -43,6 +46,7 @@ const AdminWebsiteLeadsPage = lazy(() => import('@/pages/admin/AdminWebsiteLeads
 const AdminReviewsPage = lazy(() => import('@/pages/admin/AdminReviewsPage').then((m) => ({ default: m.AdminReviewsPage })));
 const AdminUsersPage = lazy(() => import('@/pages/admin/AdminUsersPage').then((m) => ({ default: m.AdminUsersPage })));
 const AdminActivityPage = lazy(() => import('@/pages/admin/AdminActivityPage').then((m) => ({ default: m.AdminActivityPage })));
+const AdminAppointmentsPage = lazy(() => import('@/pages/admin/AdminAppointmentsPage').then((m) => ({ default: m.AdminAppointmentsPage })));
 
 const PageLoader = () => (
   <div className="flex min-h-[60vh] items-center justify-center text-[var(--color-teal-600)]">
@@ -61,6 +65,7 @@ function App() {
             <Route path="/directory" element={<DirectoryPage />} />
             <Route path="/hospitals" element={<HospitalsPage />} />
             <Route path="/facility/:idOrSlug" element={<FacilityDetailsPage />} />
+            <Route path="/facility/:idOrSlug/appointment" element={<BookAppointmentPage />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/contact" element={<ContactPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -79,6 +84,8 @@ function App() {
               <Route path="/dashboard/listing" element={<EditListingPage />} />
               <Route path="/dashboard/photos" element={<PhotosPage />} />
               <Route path="/dashboard/services" element={<ServicesPage />} />
+              <Route path="/dashboard/doctors" element={<DoctorsPage />} />
+              <Route path="/dashboard/appointments" element={<AppointmentsPage />} />
               <Route path="/dashboard/hours" element={<HoursPage />} />
               <Route path="/dashboard/website" element={<WebsitePage />} />
               <Route path="/dashboard/location" element={<LocationPage />} />
@@ -96,6 +103,7 @@ function App() {
               <Route path="/admin/website-leads" element={<AdminWebsiteLeadsPage />} />
               <Route path="/admin/reviews" element={<AdminReviewsPage />} />
               <Route path="/admin/activity" element={<AdminActivityPage />} />
+              <Route path="/admin/appointments" element={<AdminAppointmentsPage />} />
             </Route>
           </Route>
           <Route element={<ProtectedAdminRoute roles={['OWNER']} />}>

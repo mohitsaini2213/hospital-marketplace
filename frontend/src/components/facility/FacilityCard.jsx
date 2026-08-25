@@ -68,6 +68,9 @@ export const FacilityCard = ({ facility }) => {
           <Link to={`/facility/${facility.slug || facility._id}`} className="btn-secondary flex-1 !py-2 text-xs">
             View Details
           </Link>
+          <Link to={`/facility/${facility.slug || facility._id}/appointment`} className="btn-primary !px-3 !py-2" aria-label="Book appointment">
+            <Fa6.FaCalendarCheck size={13} />
+          </Link>
           {facility.mobile1 && (
             <a href={`tel:${facility.mobile1}`} className="btn-ghost !p-2" aria-label="Call facility">
               <Fa6.FaPhone size={13} />

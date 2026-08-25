@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FaHospital, FaEnvelope, FaLocationDot } from 'react-icons/fa6';
+import { FaHouseChimneyMedical, FaEnvelope, FaLocationDot } from 'react-icons/fa6';
 import { WEBSITE_SERVICE_EMAIL } from '@/utils/constants';
 
 export const Footer = () => (
@@ -8,7 +8,7 @@ export const Footer = () => (
       <div>
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold text-white">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
-            <FaHospital size={15} />
+            <FaHouseChimneyMedical size={15} />
           </span>
           Hospital Marketplace
         </Link>

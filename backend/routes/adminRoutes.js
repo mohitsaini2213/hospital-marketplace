@@ -30,6 +30,9 @@ router.patch('/website-leads/:id', ctrl.updateWebsiteLead);
 
 router.get('/activity', ctrl.listActivity);
 
+router.get('/appointments', ctrl.listAppointmentsAdmin);
+router.patch('/appointments/:id/status', ctrl.updateAppointmentAdmin);
+
 // Categories — OWNER/ADMIN only
 router.post('/categories', protectAdmin('OWNER', 'ADMIN'), ctrl.createCategory);
 router.put('/categories/:id', protectAdmin('OWNER', 'ADMIN'), ctrl.updateCategory);

@@ -4,13 +4,14 @@ import {
   FaGauge,
   FaBuilding,
   FaClipboardCheck,
+  FaCalendarCheck,
   FaLayerGroup,
   FaGlobe,
   FaStar,
   FaBell,
   FaClockRotateLeft,
   FaRightFromBracket,
-  FaHospital,
+  FaHouseChimneyMedical,
   FaUserShield,
 } from 'react-icons/fa6';
 import { useAuth } from '@/context/AuthContext';
@@ -21,6 +22,7 @@ const LINKS = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: FaGauge, end: true },
   { to: '/admin/facilities', label: 'Facilities', icon: FaBuilding },
   { to: '/admin/facilities?status=PENDING', label: 'Pending Approvals', icon: FaClipboardCheck },
+  { to: '/admin/appointments', label: 'Appointments', icon: FaCalendarCheck },
   { to: '/admin/categories', label: 'Categories', icon: FaLayerGroup },
   { to: '/admin/website-leads', label: 'Website Leads', icon: FaGlobe },
   { to: '/admin/reviews', label: 'Reviews', icon: FaStar },
@@ -52,7 +54,7 @@ export const AdminLayout = () => {
       <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-line)] bg-[var(--color-teal-900)] text-white lg:flex">
         <Link to="/admin/dashboard" className="flex items-center gap-2 px-6 py-5 font-display text-base font-semibold">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
-            <FaHospital size={14} />
+            <FaHouseChimneyMedical size={14} />
           </span>
           HM Admin
         </Link>

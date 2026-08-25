@@ -14,6 +14,8 @@ export const adminService = {
   updateWebsiteLead: (id, payload) => api.patch(`/admin/website-leads/${id}`, payload).then((r) => r.data),
 
   listActivity: (params) => api.get('/admin/activity', { params }).then((r) => r.data),
+  listAppointments: (params) => api.get('/admin/appointments', { params }).then((r) => r.data),
+  updateAppointmentStatus: (id, payload) => api.patch(`/admin/appointments/${id}/status`, payload).then((r) => r.data),
 
   createCategory: (payload) => api.post('/admin/categories', payload).then((r) => r.data),
   updateCategory: (id, payload) => api.put(`/admin/categories/${id}`, payload).then((r) => r.data),

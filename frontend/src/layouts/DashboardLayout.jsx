@@ -4,12 +4,14 @@ import {
   FaBuilding,
   FaImages,
   FaListCheck,
+  FaUserDoctor,
+  FaCalendarCheck,
   FaClock,
   FaGlobe,
   FaLocationDot,
   FaGear,
   FaRightFromBracket,
-  FaHospital,
+  FaHouseChimneyMedical,
 } from 'react-icons/fa6';
 import { useAuth } from '@/context/AuthContext';
 import { useToast } from '@/context/ToastContext';
@@ -19,6 +21,8 @@ const LINKS = [
   { to: '/dashboard/listing', label: 'My Listing', icon: FaBuilding },
   { to: '/dashboard/photos', label: 'Photos', icon: FaImages },
   { to: '/dashboard/services', label: 'Services', icon: FaListCheck },
+  { to: '/dashboard/doctors', label: 'Doctors', icon: FaUserDoctor },
+  { to: '/dashboard/appointments', label: 'Appointments', icon: FaCalendarCheck },
   { to: '/dashboard/hours', label: 'Opening Hours', icon: FaClock },
   { to: '/dashboard/website', label: 'Website', icon: FaGlobe },
   { to: '/dashboard/location', label: 'Location', icon: FaLocationDot },
@@ -41,7 +45,7 @@ export const DashboardLayout = () => {
       <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-line)] bg-white lg:flex">
         <Link to="/" className="flex items-center gap-2 px-6 py-5 font-display text-base font-semibold text-[var(--color-teal-900)]">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-teal-600)] text-white">
-            <FaHospital size={14} />
+            <FaHouseChimneyMedical size={14} />
           </span>
           Hospital Marketplace
         </Link>

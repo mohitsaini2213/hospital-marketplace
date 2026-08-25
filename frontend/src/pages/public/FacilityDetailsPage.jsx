@@ -138,8 +138,11 @@ export const FacilityDetailsPage = () => {
           </div>
         </div>
         <div className="flex shrink-0 flex-wrap gap-2">
+          <Link to={`/facility/${facility.slug || facility._id}/appointment`} className="btn-primary">
+            <Fa6.FaCalendarCheck size={13} /> Book Appointment
+          </Link>
           {facility.mobile1 && (
-            <a href={`tel:${facility.mobile1}`} className="btn-primary">
+            <a href={`tel:${facility.mobile1}`} className="btn-secondary">
               <Fa6.FaPhone size={13} /> Call
             </a>
           )}

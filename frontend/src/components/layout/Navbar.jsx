@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaXmark, FaHospital, FaUserPlus } from 'react-icons/fa6';
+import { FaBars, FaXmark, FaHouseChimneyMedical, FaHospitalUser } from 'react-icons/fa6';
 import { useAuth } from '@/context/AuthContext';
 
 const NAV_LINKS = [
@@ -20,7 +20,7 @@ export const Navbar = () => {
       <div className="container-page flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold text-[var(--color-teal-900)]">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-teal-600)] text-white">
-            <FaHospital size={15} />
+            <FaHouseChimneyMedical size={15} />
           </span>
           Hospital Marketplace
         </Link>
@@ -53,7 +53,7 @@ export const Navbar = () => {
                 Login
               </Link>
               <Link to="/register" className="btn-primary">
-                <FaUserPlus size={13} /> Register Your Facility
+                <FaHospitalUser size={13} /> Register Your Facility
               </Link>
             </>
           )}

@@ -4,6 +4,7 @@ const ActivityLog = require('../models/ActivityLog');
 const Notification = require('../models/Notification');
 const Review = require('../models/Review');
 const FacilityCategory = require('../models/FacilityCategory');
+const Appointment = require('../models/Appointment');
 const asyncHandler = require('../middleware/asyncHandler');
 const { ApiError } = require('../middleware/errorHandler');
 const { logActivity } = require('../utils/activityLogger');
@@ -21,6 +22,8 @@ const dashboardSummary = asyncHandler(async (req, res) => {
     leadsCount,
     recentRegistrations,
     recentActivity,
+    appointmentsTotal,
+    appointmentsPending,
   ] = await Promise.all([
     Facility.countDocuments(),
     Facility.countDocuments({ status: 'PENDING' }),
@@ -31,6 +34,8 @@ const dashboardSummary = asyncHandler(async (req, res) => {
     WebsiteLead.countDocuments({ status: { $ne: 'Closed' } }),
     Facility.find().sort({ createdAt: -1 }).limit(8).select('name facilityType status createdAt city'),
     ActivityLog.find().sort({ createdAt: -1 }).limit(15),
+    Appointment.countDocuments(),
+    Appointment.countDocuments({ status: 'PENDING' }),
   ]);
 
   // Registrations over last 30 days for chart
@@ -49,7 +54,7 @@ const dashboardSummary = asyncHandler(async (req, res) => {
   res.json({
     success: true,
     data: {
-      totals: { total, pending, approved, rejected, suspended, leads: leadsCount },
+      totals: { total, pending, approved, rejected, suspended, leads: leadsCount, appointments: appointmentsTotal, appointmentsPending: appointmentsPending },
       byType: byType.map((t) => ({ type: t._id, count: t.count })),
       trend: trend.map((t) => ({ date: t._id, count: t.count })),
       recentRegistrations,
@@ -311,6 +316,74 @@ const updateAdminStatus = asyncHandler(async (req, res) => {
   res.json({ success: true, data: admin });
 });
 
+
+// ---------- APPOINTMENTS ----------
+
+// GET /api/admin/appointments
+const listAppointmentsAdmin = asyncHandler(async (req, res) => {
+  const { status, date, facility, page = 1, limit = 20 } = req.query;
+  const filter = {};
+  if (status) filter.status = status;
+  if (date) filter.date = date;
+  if (facility) filter.facility = facility;
+
+  const pageNum = Math.max(1, parseInt(page, 10) || 1);
+  const limitNum = Math.min(100, Math.max(1, parseInt(limit, 10) || 20));
+
+  const [items, total] = await Promise.all([
+    Appointment.find(filter)
+      .populate('facility', 'name city')
+      .populate('doctor', 'name specialization')
+      .sort({ date: 1, time: 1, createdAt: -1 })
+      .skip((pageNum - 1) * limitNum)
+      .limit(limitNum),
+    Appointment.countDocuments(filter),
+  ]);
+
+  res.json({ success: true, data: items, pagination: { page: pageNum, limit: limitNum, total, pages: Math.ceil(total / limitNum) } });
+});
+
+// PATCH /api/admin/appointments/:id/status
+const updateAppointmentAdmin = asyncHandler(async (req, res) => {
+  const { status, notes } = req.body;
+  if (!Appointment.STATUS.includes(status)) throw new ApiError(400, 'Invalid appointment status.');
+
+  const appointment = await Appointment.findById(req.params.id)
+    .populate('facility', 'name')
+    .populate('doctor', 'name specialization');
+  if (!appointment) throw new ApiError(404, 'Appointment not found.');
+
+  appointment.status = status;
+  if (notes !== undefined) appointment.notes = notes;
+  await appointment.save();
+
+  if (appointment.patientEmail) {
+    const tpl = templates.appointmentStatusChanged({
+      patientName: appointment.patientName,
+      facilityName: appointment.facility.name,
+      doctorName: appointment.doctor.name,
+      date: appointment.date,
+      time: appointment.time,
+      bookingRef: appointment.bookingRef,
+      status,
+    });
+    sendEmail({ to: appointment.patientEmail, ...tpl });
+  }
+
+  await logActivity({
+    actorType: 'ADMIN',
+    actor: req.admin._id,
+    actorName: req.admin.name,
+    action: 'ADMIN_UPDATE_APPOINTMENT',
+    targetType: 'Appointment',
+    target: appointment._id,
+    req,
+    metadata: { status },
+  });
+
+  res.json({ success: true, message: 'Appointment updated.', data: appointment });
+});
+
 module.exports = {
   dashboardSummary,
   listFacilitiesAdmin,
@@ -330,4 +403,6 @@ module.exports = {
   listAdmins,
   createAdmin,
   updateAdminStatus,
+  listAppointmentsAdmin,
+  updateAppointmentAdmin,
 };
