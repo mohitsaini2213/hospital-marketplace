@@ -21,13 +21,16 @@ export const Navbar = () => {
       <div className="container-page flex h-16 items-center justify-between">
         <Link
           to="/"
-          className="flex items-center gap-2 font-display text-lg font-semibold text-[var(--color-teal-900)]"
+          className="flex items-center gap-2.5 font-display text-lg font-semibold text-[var(--color-teal-900)]"
         >
-          <img
-            src={hmLogo}
-            alt="HM Logo"
-            className="h-8 w-8 rounded-lg object-contain"
-          />
+          {/* Box size same rahega, lekin andar ki GIF zoom (scale-175) karke center wale HM ko bada kar diya gaya hai */}
+          <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
+            <img
+              src={hmLogo}
+              alt="HM Logo"
+              className="h-full w-full object-cover scale-[1.85]"
+            />
+          </span>
           <span>Hospital Marketplace</span>
         </Link>
 
