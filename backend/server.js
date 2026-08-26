@@ -27,10 +27,29 @@ const httpServer = http.createServer(app);
 // ---------- Security & core middleware ----------
 app.set('trust proxy', 1); // needed behind Render's proxy for correct req.ip / secure cookies
 
-const allowedOrigins = (process.env.CLIENT_URL || 'http://localhost:5173').split(',');
+const allowedOrigins = (
+  process.env.CLIENT_URL || 'http://localhost:5173'
+)
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: (origin, callback) => {
+      // Allow requests without Origin header
+      // such as server-to-server/health checks.
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.warn(`[CORS] Blocked origin: ${origin}`);
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   })
 );
