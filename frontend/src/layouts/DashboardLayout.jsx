@@ -52,7 +52,6 @@ export const DashboardLayout = () => {
           to="/"
           className="flex items-center gap-2.5 px-6 py-4 font-display text-base font-semibold text-[var(--color-teal-900)]"
         >
-          {/* Animated HM Logo */}
           <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg">
             <img
               src={hmLogo}
@@ -84,7 +83,6 @@ export const DashboardLayout = () => {
           ))}
         </nav>
 
-        {/* Account / Logout */}
         <div className="border-t border-[var(--color-line)] p-3">
           <div className="mb-2 truncate px-3 text-xs text-[var(--color-ink-soft)]">
             {user?.email}
@@ -108,7 +106,6 @@ export const DashboardLayout = () => {
             to="/"
             className="flex items-center gap-2 font-display text-base font-semibold text-[var(--color-teal-900)]"
           >
-            {/* Animated HM Logo */}
             <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-lg">
               <img
                 src={hmLogo}
@@ -155,9 +152,6 @@ export const DashboardLayout = () => {
           <Outlet />
         </main>
       </div>
-    </div>
-  );
-};      </div>
     </div>
   );
 };
