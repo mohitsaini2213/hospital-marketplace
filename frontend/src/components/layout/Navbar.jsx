@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import { FaBars, FaXmark, FaHouseChimneyMedical, FaHospitalUser } from 'react-icons/fa6';
+import { FaBars, FaXmark, FaHospitalUser } from 'react-icons/fa6';
 import { useAuth } from '@/context/AuthContext';
+import hmLogo from '@/assets/hm-logo.gif';
 
 const NAV_LINKS = [
   { to: '/directory', label: 'Directory' },
@@ -19,21 +20,28 @@ export const Navbar = () => {
     <header className="sticky top-0 z-50 border-b border-[var(--color-line)] bg-[var(--color-paper)]/90 backdrop-blur-md">
       <div className="container-page flex h-16 items-center justify-between">
         <Link
-  to="/"
-  className="flex items-center gap-2 font-display text-lg font-semibold text-[var(--color-teal-900)]"
->
- <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-teal-600)] text-white">
-  <FaHouseChimneyMedical size={15} />
-</span>
-Hospital Marketplace
-</Link>
+          to="/"
+          className="flex items-center gap-2 font-display text-lg font-semibold text-[var(--color-teal-900)]"
+        >
+          <img
+            src={hmLogo}
+            alt="HM Logo"
+            className="h-8 w-8 rounded-lg object-contain"
+          />
+          <span>Hospital Marketplace</span>
+        </Link>
+
         <nav className="hidden items-center gap-7 lg:flex">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${isActive ? 'text-[var(--color-teal-700)]' : 'text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]'}`
+                `text-sm font-medium transition-colors ${
+                  isActive
+                    ? 'text-[var(--color-teal-700)]'
+                    : 'text-[var(--color-ink-soft)] hover:text-[var(--color-ink)]'
+                }`
               }
             >
               {link.label}
@@ -45,15 +53,21 @@ Hospital Marketplace
           {user || admin ? (
             <button
               className="btn-secondary"
-              onClick={() => navigate(admin ? '/admin/dashboard' : '/dashboard')}
+              onClick={() =>
+                navigate(admin ? '/admin/dashboard' : '/dashboard')
+              }
             >
               {admin ? 'Admin Dashboard' : 'My Dashboard'}
             </button>
           ) : (
             <>
-              <Link to="/login" className="text-sm font-medium text-[var(--color-ink)] hover:text-[var(--color-teal-700)]">
+              <Link
+                to="/login"
+                className="text-sm font-medium text-[var(--color-ink)] hover:text-[var(--color-teal-700)]"
+              >
                 Login
               </Link>
+
               <Link to="/register" className="btn-primary">
                 <FaHospitalUser size={13} /> Register Your Facility
               </Link>
@@ -80,13 +94,19 @@ Hospital Marketplace
                 to={link.to}
                 onClick={() => setOpen(false)}
                 className={({ isActive }) =>
-                  `rounded-lg px-3 py-2.5 text-sm font-medium ${isActive ? 'bg-[var(--color-teal-050)] text-[var(--color-teal-700)]' : 'text-[var(--color-ink)]'}`
+                  `rounded-lg px-3 py-2.5 text-sm font-medium ${
+                    isActive
+                      ? 'bg-[var(--color-teal-050)] text-[var(--color-teal-700)]'
+                      : 'text-[var(--color-ink)]'
+                  }`
                 }
               >
                 {link.label}
               </NavLink>
             ))}
+
             <div className="my-2 h-px bg-[var(--color-line)]" />
+
             {user || admin ? (
               <button
                 className="btn-primary w-full"
@@ -99,10 +119,19 @@ Hospital Marketplace
               </button>
             ) : (
               <div className="flex flex-col gap-2">
-                <Link to="/login" onClick={() => setOpen(false)} className="btn-secondary w-full">
+                <Link
+                  to="/login"
+                  onClick={() => setOpen(false)}
+                  className="btn-secondary w-full"
+                >
                   Login
                 </Link>
-                <Link to="/register" onClick={() => setOpen(false)} className="btn-primary w-full">
+
+                <Link
+                  to="/register"
+                  onClick={() => setOpen(false)}
+                  className="btn-primary w-full"
+                >
                   Register Your Facility
                 </Link>
               </div>
