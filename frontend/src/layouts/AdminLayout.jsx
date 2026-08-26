@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import hmLogo from '@/assets/hm-logo.gif';
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
 import {
   FaGauge,
