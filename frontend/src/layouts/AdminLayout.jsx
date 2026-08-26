@@ -95,9 +95,20 @@ export const AdminLayout = () => {
 
       <div className="flex-1">
         <header className="flex items-center justify-between border-b border-[var(--color-line)] bg-white px-4 py-3 lg:px-6">
-          <Link to="/admin/dashboard" className="font-display text-base font-semibold text-[var(--color-teal-900)] lg:hidden">
-            HM Admin
-          </Link>
+       <Link
+  to="/admin/dashboard"
+  className="flex items-center gap-2 font-display text-base font-semibold text-[var(--color-teal-900)] lg:hidden"
+>
+  <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
+    <img
+      src={hmLogo}
+      alt="Hospital Marketplace"
+      className="h-full w-full object-cover scale-[1.8]"
+    />
+  </span>
+
+  <span>Hospital Marketplace</span>
+</Link>
           <div className="hidden max-w-sm flex-1 lg:block">
             <input placeholder="Search facilities, leads, admins…" className="input" />
           </div>
