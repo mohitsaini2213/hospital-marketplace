@@ -23,12 +23,12 @@ export const Navbar = () => {
           to="/"
           className="flex items-center gap-2.5 font-display text-lg font-semibold text-[var(--color-teal-900)]"
         >
-          {/* Box size same rahega, lekin andar ki GIF zoom (scale-175) karke center wale HM ko bada kar diya gaya hai */}
-          <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
+          {/* Logo container size h-10 w-10 aur inner GIF zoom scale-[1.8] */}
+          <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg">
             <img
               src={hmLogo}
               alt="HM Logo"
-              className="h-full w-full object-cover scale-[1.85]"
+              className="h-full w-full object-cover scale-[1.8]"
             />
           </span>
           <span>Hospital Marketplace</span>
