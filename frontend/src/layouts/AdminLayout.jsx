@@ -54,10 +54,15 @@ export const AdminLayout = () => {
     <div className="flex min-h-screen bg-[var(--color-paper)]">
       <aside className="hidden w-64 shrink-0 flex-col border-r border-[var(--color-line)] bg-[var(--color-teal-900)] text-white lg:flex">
         <Link to="/admin/dashboard" className="flex items-center gap-2 px-6 py-5 font-display text-base font-semibold">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10">
-            <FaHouseChimneyMedical size={14} />
-          </span>
-          HM Admin
+         <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-lg bg-white/10">
+  <img
+    src={hmLogo}
+    alt="Hospital Marketplace"
+    className="h-full w-full object-cover scale-[1.8]"
+  />
+</span>
+
+<span>Hospital Marketplace</span>
         </Link>
         <nav className="flex-1 space-y-1 px-3 py-2">
           {LINKS.map(({ to, label, icon: Icon, end }) => (
