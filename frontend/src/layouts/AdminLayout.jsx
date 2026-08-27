@@ -1,4 +1,3 @@
-```jsx
 import { useEffect, useRef, useState } from 'react';
 import hmLogo from '@/assets/hm-logo.gif';
 import { NavLink, Outlet, useNavigate, Link } from 'react-router-dom';
@@ -101,13 +100,13 @@ export const AdminLayout = () => {
         res?.data ||
         (Array.isArray(res) ? res : []);
 
-      setNotifications(
-        Array.isArray(notificationList)
-          ? notificationList
-          : []
-      );
+      const safeNotifications = Array.isArray(notificationList)
+        ? notificationList
+        : [];
 
-      const calculatedUnread = notificationList.filter(
+      setNotifications(safeNotifications);
+
+      const calculatedUnread = safeNotifications.filter(
         (notification) =>
           !notification?.read &&
           !notification?.isRead &&
@@ -132,7 +131,7 @@ export const AdminLayout = () => {
   };
 
   // =========================================================
-  // INITIAL NOTIFICATION LOAD
+  // INITIAL LOAD
   // =========================================================
 
   useEffect(() => {
@@ -140,7 +139,7 @@ export const AdminLayout = () => {
   }, []);
 
   // =========================================================
-  // CLOSE NOTIFICATION DROPDOWN ON OUTSIDE CLICK
+  // CLOSE DROPDOWN WHEN CLICKING OUTSIDE
   // =========================================================
 
   useEffect(() => {
@@ -167,21 +166,21 @@ export const AdminLayout = () => {
   }, []);
 
   // =========================================================
-  // NOTIFICATION BUTTON
+  // OPEN / CLOSE NOTIFICATIONS
   // =========================================================
 
   const handleNotificationClick = async () => {
-    const willOpen = !notificationOpen;
+    const nextState = !notificationOpen;
 
-    setNotificationOpen(willOpen);
+    setNotificationOpen(nextState);
 
-    if (willOpen) {
+    if (nextState) {
       await loadNotifications();
     }
   };
 
   // =========================================================
-  // MARK SINGLE NOTIFICATION AS READ
+  // MARK ONE NOTIFICATION AS READ
   // =========================================================
 
   const handleMarkRead = async (notification) => {
@@ -191,7 +190,7 @@ export const AdminLayout = () => {
 
     if (!id) {
       console.warn(
-        'Notification ID missing:',
+        'Notification ID is missing:',
         notification
       );
       return;
@@ -292,26 +291,38 @@ export const AdminLayout = () => {
   // NOTIFICATION HELPERS
   // =========================================================
 
-  const getNotificationId = (notification) =>
-    notification?._id ||
-    notification?.id;
+  const getNotificationId = (notification) => {
+    return (
+      notification?._id ||
+      notification?.id
+    );
+  };
 
-  const isNotificationRead = (notification) =>
-    notification?.read === true ||
-    notification?.isRead === true ||
-    Boolean(notification?.readAt);
+  const isNotificationRead = (notification) => {
+    return (
+      notification?.read === true ||
+      notification?.isRead === true ||
+      Boolean(notification?.readAt)
+    );
+  };
 
-  const getNotificationTitle = (notification) =>
-    notification?.title ||
-    notification?.subject ||
-    notification?.type ||
-    'Notification';
+  const getNotificationTitle = (notification) => {
+    return (
+      notification?.title ||
+      notification?.subject ||
+      notification?.type ||
+      'Notification'
+    );
+  };
 
-  const getNotificationMessage = (notification) =>
-    notification?.message ||
-    notification?.description ||
-    notification?.body ||
-    'You have a new notification.';
+  const getNotificationMessage = (notification) => {
+    return (
+      notification?.message ||
+      notification?.description ||
+      notification?.body ||
+      'You have a new notification.'
+    );
+  };
 
   const formatNotificationTime = (
     notification
@@ -370,6 +381,7 @@ export const AdminLayout = () => {
         </Link>
 
         <nav className="flex-1 space-y-1 px-3 py-2">
+
           {LINKS.map(
             ({
               to,
@@ -396,6 +408,7 @@ export const AdminLayout = () => {
               </NavLink>
             )
           )}
+
         </nav>
 
         <div className="border-t border-white/10 p-3">
@@ -415,10 +428,11 @@ export const AdminLayout = () => {
           </button>
 
         </div>
+
       </aside>
 
       {/* =====================================================
-          MAIN CONTENT
+          MAIN AREA
       ====================================================== */}
 
       <div className="flex-1">
@@ -436,35 +450,38 @@ export const AdminLayout = () => {
             className="flex items-center gap-2 font-display text-base font-semibold text-[var(--color-teal-900)] lg:hidden"
           >
             <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg">
+
               <img
                 src={hmLogo}
                 alt="Hospital Marketplace"
                 className="h-full w-full object-cover scale-[1.8]"
               />
+
             </span>
 
             <span>
               Hospital Marketplace
             </span>
+
           </Link>
 
           {/* Desktop Search */}
 
           <div className="hidden max-w-sm flex-1 lg:block">
+
             <input
               placeholder="Search facilities, leads, admins…"
               className="input"
             />
+
           </div>
 
-          {/* =================================================
-              HEADER RIGHT SIDE
-          ================================================== */}
+          {/* Header Right */}
 
           <div className="flex items-center gap-4">
 
             {/* =================================================
-                NOTIFICATION AREA
+                NOTIFICATIONS
             ================================================== */}
 
             <div
@@ -478,9 +495,7 @@ export const AdminLayout = () => {
                 type="button"
                 onClick={handleNotificationClick}
                 aria-label="Notifications"
-                aria-expanded={
-                  notificationOpen
-                }
+                aria-expanded={notificationOpen}
                 aria-haspopup="true"
                 className={[
                   'relative flex h-10 w-10 items-center justify-center rounded-full text-[var(--color-ink-soft)] transition-colors hover:bg-[var(--color-paper-dim)]',
@@ -489,6 +504,7 @@ export const AdminLayout = () => {
                     : '',
                 ].join(' ')}
               >
+
                 <FaBell size={17} />
 
                 {unread > 0 && (
@@ -498,10 +514,11 @@ export const AdminLayout = () => {
                       : unread}
                   </span>
                 )}
+
               </button>
 
               {/* =================================================
-                  NOTIFICATION DROPDOWN
+                  DROPDOWN
               ================================================== */}
 
               {notificationOpen && (
@@ -512,19 +529,23 @@ export const AdminLayout = () => {
                   <div className="flex items-center justify-between border-b border-[var(--color-line)] px-4 py-3">
 
                     <div>
+
                       <h3 className="text-sm font-semibold text-[var(--color-ink)]">
                         Notifications
                       </h3>
 
                       <p className="mt-0.5 text-xs text-[var(--color-ink-soft)]">
+
                         {unread > 0
-                          ? `${unread} unread notification${
-                              unread > 1
-                                ? 's'
-                                : ''
-                            }`
+                          ? unread +
+                            ' unread notification' +
+                            (unread > 1
+                              ? 's'
+                              : '')
                           : 'You are all caught up'}
+
                       </p>
+
                     </div>
 
                     <div className="flex items-center gap-1">
@@ -533,9 +554,7 @@ export const AdminLayout = () => {
 
                       <button
                         type="button"
-                        onClick={
-                          loadNotifications
-                        }
+                        onClick={loadNotifications}
                         disabled={
                           notificationLoading
                         }
@@ -543,6 +562,7 @@ export const AdminLayout = () => {
                         title="Refresh notifications"
                         className="flex h-8 w-8 items-center justify-center rounded-lg text-[var(--color-ink-soft)] hover:bg-[var(--color-paper-dim)] disabled:opacity-50"
                       >
+
                         <FaRotate
                           size={13}
                           className={
@@ -551,6 +571,7 @@ export const AdminLayout = () => {
                               : ''
                           }
                         />
+
                       </button>
 
                       {/* Mark All Read */}
@@ -590,6 +611,7 @@ export const AdminLayout = () => {
                       </button>
 
                     </div>
+
                   </div>
 
                   {/* =================================================
@@ -602,6 +624,7 @@ export const AdminLayout = () => {
 
                     {notificationLoading &&
                     notifications.length === 0 ? (
+
                       <div className="flex items-center justify-center px-4 py-10">
 
                         <FaRotate
@@ -614,6 +637,7 @@ export const AdminLayout = () => {
                         </span>
 
                       </div>
+
                     ) : notifications.length ===
                       0 ? (
 
@@ -622,10 +646,12 @@ export const AdminLayout = () => {
                       <div className="px-4 py-10 text-center">
 
                         <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-paper-dim)]">
+
                           <FaBell
                             size={18}
                             className="text-[var(--color-ink-soft)]"
                           />
+
                         </div>
 
                         <p className="text-sm font-medium text-[var(--color-ink)]">
@@ -637,12 +663,15 @@ export const AdminLayout = () => {
                         </p>
 
                       </div>
+
                     ) : (
 
-                      /* Notifications */
-
                       notifications.map(
-                        (notification, index) => {
+                        (
+                          notification,
+                          index
+                        ) => {
+
                           const id =
                             getNotificationId(
                               notification
@@ -657,7 +686,8 @@ export const AdminLayout = () => {
                             <div
                               key={
                                 id ||
-                                `notification-${index}`
+                                'notification-' +
+                                  index
                               }
                               className={[
                                 'border-b border-[var(--color-line)] px-4 py-3 transition-colors last:border-b-0',
@@ -669,7 +699,7 @@ export const AdminLayout = () => {
 
                               <div className="flex gap-3">
 
-                                {/* Unread Dot */}
+                                {/* Unread Indicator */}
 
                                 <div className="pt-1">
 
@@ -684,7 +714,7 @@ export const AdminLayout = () => {
 
                                 </div>
 
-                                {/* Notification Content */}
+                                {/* Content */}
 
                                 <div className="min-w-0 flex-1">
 
@@ -710,17 +740,20 @@ export const AdminLayout = () => {
                                   {formatNotificationTime(
                                     notification
                                   ) && (
+
                                     <p className="mt-2 text-[10px] text-[var(--color-ink-soft)]">
                                       {formatNotificationTime(
                                         notification
                                       )}
                                     </p>
+
                                   )}
 
                                   {/* Mark As Read */}
 
                                   {!read &&
                                     id && (
+
                                       <button
                                         type="button"
                                         onClick={() =>
@@ -732,24 +765,27 @@ export const AdminLayout = () => {
                                       >
                                         Mark as read
                                       </button>
+
                                     )}
 
                                 </div>
+
                               </div>
+
                             </div>
                           );
                         }
                       )
+
                     )}
 
                   </div>
 
-                  {/* =================================================
-                      DROPDOWN FOOTER
-                  ================================================== */}
+                  {/* Footer */}
 
                   {notifications.length >
                     0 && (
+
                     <div className="border-t border-[var(--color-line)] px-4 py-2.5">
 
                       <button
@@ -763,6 +799,7 @@ export const AdminLayout = () => {
                       </button>
 
                     </div>
+
                   )}
 
                 </div>
@@ -786,6 +823,7 @@ export const AdminLayout = () => {
             </div>
 
           </div>
+
         </header>
 
         {/* ===================================================
@@ -802,6 +840,7 @@ export const AdminLayout = () => {
                 label,
                 end,
               }) => (
+
                 <NavLink
                   key={to}
                   to={to}
@@ -817,10 +856,12 @@ export const AdminLayout = () => {
                 >
                   {label}
                 </NavLink>
+
               )
             )}
 
           </div>
+
         </div>
 
         {/* ===================================================
@@ -832,9 +873,7 @@ export const AdminLayout = () => {
         </main>
 
       </div>
+
     </div>
   );
 };
-```
-
-
