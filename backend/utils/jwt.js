@@ -16,33 +16,29 @@ const verifyAccessToken = (token) =>
 const verifyRefreshToken = (token) =>
   jwt.verify(token, process.env.JWT_REFRESH_SECRET);
 
-// Name of the HTTP-only refresh token cookie
 const REFRESH_COOKIE_NAME = 'hm_refresh_token';
 
-// Cookie options used when creating the refresh-token cookie.
-// These options must match the cookie being cleared during logout.
+/*
+ * IMPORTANT:
+ * The cookie options used here must stay identical to the
+ * options used when clearing the cookie during logout.
+ */
+
 const refreshCookieOptions = () => ({
   httpOnly: true,
 
-  // Render backend runs over HTTPS in production.
   secure: process.env.NODE_ENV === 'production',
 
-  // Required for Vercel frontend -> Render backend.
   sameSite:
     process.env.NODE_ENV === 'production'
       ? 'none'
       : 'lax',
 
-  // Cookie is only available to authentication endpoints.
   path: '/api/auth',
 
-  // Refresh token lifetime: 30 days.
   maxAge: 30 * 24 * 60 * 60 * 1000,
 });
 
-// Separate options specifically for clearing the cookie.
-// Do NOT include maxAge here. The important thing is that
-// path/security/sameSite match the cookie that was originally created.
 const clearRefreshCookieOptions = () => ({
   httpOnly: true,
 
@@ -54,6 +50,11 @@ const clearRefreshCookieOptions = () => ({
       : 'lax',
 
   path: '/api/auth',
+
+  // Explicitly expire the cookie immediately.
+  maxAge: 0,
+
+  expires: new Date(0),
 });
 
 module.exports = {
